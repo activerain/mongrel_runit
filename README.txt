@@ -95,7 +95,7 @@ check: A block of code that will become the check file.  By default, it is:
     http = Net::HTTP.new('#{address}', #{@config["port"].to_i})
     begin
       response = http.options('/')
-      if response = Net::HTTPSuccess
+      if [Net::HTTPSuccess, Net::HTTPRedirection].any? {|klass| response = klass}
         exit 0
       else 
         exit 1
@@ -120,4 +120,4 @@ base_log_directory: By default, your logs will wind up under each service
     
     For your logs.  Not a bad idea to set this to your applications "log"
     directory.
-    
+
