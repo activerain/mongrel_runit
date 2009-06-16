@@ -97,7 +97,7 @@ module MongrelRunit
     #   http = Net::HTTP.new('#{address}', #{@config["port"].to_i})
     #   begin
     #    response = http.options('/')
-    #    if response = Net::HTTPSuccess
+    #    if [Net::HTTPSuccess, Net::HTTPRedirection].any? {|klass| response = klass}
     #      exit 0
     #    else 
     #      exit 1
@@ -117,7 +117,7 @@ require 'net/http'
 http = Net::HTTP.new('#{@config['address']}', #{@config["port"].to_i})
 begin
   response = http.options('/')
-  if response = Net::HTTPSuccess
+  if [Net::HTTPSuccess, Net::HTTPRedirection].any? {|klass| response = klass}
     exit 0
   else 
     exit 1
